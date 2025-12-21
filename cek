@@ -1,0 +1,21 @@
+# Kirim notif
+send_notification
+
+
+### MODIFIKASI DIMULAI DISINI: PANGGIL API BOT TELEGRAM ###
+
+if [ $TOTAL_EXPIRED -gt 0 ]; then
+    # HARAP GANTI 3 VARIABEL DI BAWAH INI SESUAI KONFIGURASI BOT TELEGRAM ANDA
+    BOT_URL="http://41.216.178.123:50123"  
+    SERVER_ID_BOT="15" 
+    SECRET_KEY="TUNNELFTDOR" 
+    
+    # Mengirim sinyal ke bot bahwa ada akun expired yang dihapus.
+    # Bot akan mengurangi total_create_akun sebanyak TOTAL_EXPIRED.
+    # Payload dikirim dengan jumlah akun expired, bukan hanya 1.
+    /usr/bin/curl -s -X POST -H "Content-Type: application/json" \
+         -d '{"server_id": "'"${SERVER_ID_BOT}"'", "action": "expired_account", "secret": "'"${SECRET_KEY}"'", "count": "'"${TOTAL_EXPIRED}"'"}' \
+         "${BOT_URL}/server-quota-update" &
+fi
+
+### MODIFIKASI BERAKHIR DISINI ###
